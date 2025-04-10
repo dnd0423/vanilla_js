@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한국어 명언집</title>
+  <script>
+    fetch("https://korean-advice-open-api.vercel.app/api/advice", {
+      method: "GET",
+    }).then(response => {
+      if(!response.ok){
+        throw new Error("명언을 찾을수 없습니다!");
+      }
+      return response.json();
+    }).then(data => {
+      let element = document.getElementById("korean-advice");
+
+      let data1 = data.author;
+      let data2 = data.authorProfile;
+      let data3 = data.message;
+
+      element.innerHTML += `<div>${data1}</div>
+                            <div>${data2}</div>
+                            <div>${data3}</div>`;
+
+
+    }).catch(error => {
+      alert("명언을 찾을수 없습니다!");
+    })
+
+
+  </script>
+</head>
+<body>
+  <div id="korean-advice"></div>
+</body>
+</html>

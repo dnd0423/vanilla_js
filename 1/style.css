@@ -1,0 +1,96 @@
+:root{
+  /*여기에 변수 선언가능*/
+  --primaryColor: green;
+  --errorColor: red;
+}
+
+html{
+  /*박스모델을 설정할때 사용
+  1. border-box: 영역의 크기를 지정할때 패딩과 테두리를 포함한 content크기를 계산
+  2. content-box: 영역의 크기를 지정할때 패딩과 테두리를 제외한 content크기만을 계산
+  일반적으로는 border-box를 사용함!
+  */
+  box-sizing: border-box;
+
+}
+
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /*뷰포트의 높이를 100%를 최소높이로 지정 */
+  background-color: white;
+
+}
+
+#wrapper{
+  width: 420px;
+  box-shadow: 0px 4px 14px black;
+  /*영역의 그림자를 설정 
+  0px 은 수평방향의 그림자를 설정
+  4px 은 수직방향으로 그림자를 설정
+  14px 은 그림자의 흐림도를 설정
+  */
+}
+
+h2{
+  text-align: center;
+  margin-top: 20px;
+}
+
+.inputGroup{
+  padding: 8px 12px;
+}
+
+.inputGroup label{
+  display: block;
+  padding: 12px 0;
+}
+
+.inputGroup input{
+  display: block;
+  width: 93%;
+  padding: 12px;
+  border: 2px solid #e2e2e2;
+  font-size: 16px;
+}
+
+.inputGroup input:focus{
+  outline: none;
+  border-color: #777;
+}
+
+.inputGroup.valid input{
+  border-color: var(--primaryColor);
+  
+}
+
+.inputGroup.invalid input {
+  border-color: var(--errorColor);
+}
+
+.inputGroup .helperText{
+  display: block;
+  padding: 8px;
+}
+
+.inputGroup.valid .helperText{
+  visibility: hidden;
+}
+
+.inputGroup.invalid .helperText{
+  color: var(--errorColor);
+}
+
+#wrapper button{
+  display: block;
+  width: 85%;
+  margin: 0 auto;
+  height: 50px;
+  margin-bottom: 25px;
+  font-size: 18px;
+  background-color: var(--primaryColor);
+  border: 2px solid var(--primaryColor);
+  color: white;
+  cursor: pointer;
+}

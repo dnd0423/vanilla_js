@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>일본 우편번호 찾기</title>
+  <script>
+        /*
+        address1: 
+        "千代田区"
+        address2
+          : 
+        "永田町"
+      address3
+      : 
+        ""
+        address4
+: 
+          ""
+        prefecture
+: 
+        "東京都"
+        */
+
+
+
+        function test(){
+        let text = document.getElementById("youbin").value;
+
+        let yubin = text;
+
+        
+
+        async function youbin() {
+          const response = await fetch(`https://jp-postal-code-api.ttskch.com/api/v1/${yubin}.json`);
+          const jsonData = await response.json();
+          console.log(jsonData);
+
+          const arrYoubin = jsonData.addresses;
+
+          let data1 = arrYoubin[0].ja.prefecture;
+          let data2 = arrYoubin[0].ja.address1;
+          let data3 = arrYoubin[0].ja.address2;
+
+          let total = data1 + " "+ data2 + " "+ data3;
+
+          alert(total);
+        
+        }
+
+        youbin();
+
+        }
+
+    
+
+  </script>
+</head>
+<body>
+  <label for="youbin">郵便番号</label>
+  <input type="text" id="youbin">
+  <button type="button" onclick="test()">検索</button>
+</body>
+</html>
