@@ -98,6 +98,27 @@ fetch("https://korean-advice-open-api.vercel.app/api/advice", {
   function selectButtonAction(event){
     event.preventDefault();
 
+    if(!(localStorage.getItem("favor"))){
+      const advice = [];
+
+      advice.push(temp.innerText);
+      
+      localStorage.setItem("favor", JSON.stringify(advice));
+
+      
+    }else{
+      const advice = localStorage.getItem("favor");
+
+      const data = JSON.parse(advice);
+
+      data.push(temp.innerText);
+
+      localStorage.setItem("favor", JSON.stringify(data));
+    }
+
+    
+
+
   
   }
 
@@ -113,9 +134,11 @@ fetch("https://korean-advice-open-api.vercel.app/api/advice", {
   function printAdvice(){
     const stored = localStorage.getItem("favor");
 
-    const storedFavor = stored ? JSON.parse(stored) : [];
+    const storedFavor = stored ? JSON.parse(stored) : ["즐겨찾기한 명언이 없습니다!"];
 
-    const sentences = storedFavor.split(/(?<=[.?!])\s+/);
+    const str = Object.values(storedFavor).join(" ");
+
+    const sentences = str.split(/(?<=[.?!])\s+/);
 
     const cleanSentences = sentences.map(sentence =>
   sentence.trim().replace(/^["'\[\]]+|["'\[\]]+$/g, '')
@@ -123,11 +146,14 @@ fetch("https://korean-advice-open-api.vercel.app/api/advice", {
 
     for(const sentence of cleanSentences){
       const li = document.createElement("li");
-      li.textContent = sentence;
+      li.textContent += sentence;
       wrapper2.appendChild(li);
+      
     }
+
   }
   
+  printAdvice();
   nextButtonClick();
   selectButtonClick();
 
