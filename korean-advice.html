@@ -53,12 +53,17 @@
 
   <div id="wrapper2">
     <h3>즐겨찾기 명언</h3>
+    <div id="temp" hidden></div>
   </div>
+
 </div>
 
 
 <script>
-  fetch("https://korean-advice-open-api.vercel.app/api/advice", {
+
+  let pasingData = null;
+
+fetch("https://korean-advice-open-api.vercel.app/api/advice", {
     method: "GET",
   }).then(response => {
     if(!response.ok){
@@ -67,13 +72,14 @@
     return response.json();
   }).then(data => {
     let element = document.getElementById("wrapper");
+    let temp = document.getElementById("temp");
 
     let data1 = data.author;
     let data2 = data.authorProfile;
     let data3 = data.message;
 
     element.innerHTML += `<div id="content">${data3}</div>`;
-
+    temp.innerText = data3;
 
   }).catch(error => {
     alert("명언을 찾을수 없습니다!");
@@ -82,6 +88,7 @@
   const nextButton = document.getElementById("nextButton");
   const selectButton = document.getElementById("selectButton");
   const wrapper2 = document.getElementById("wrapper2");
+  const temp = document.getElementById("temp");
 
   function nextButtonAction(event){
     event.preventDefault();
@@ -91,9 +98,10 @@
   function selectButtonAction(event){
     event.preventDefault();
 
-    
+  
   }
 
+  }
   function nextButtonClick(){
     nextButton.addEventListener("click", nextButtonAction);
   }
@@ -102,7 +110,27 @@
     selectButton.addEventListener("click", selectButtonAction);
   }
 
+  function printAdvice(){
+    const stored = localStorage.getItem("favor");
+
+    const storedFavor = stored ? JSON.parse(stored) : [];
+
+    const sentences = storedFavor.split(/(?<=[.?!])\s+/);
+
+    const cleanSentences = sentences.map(sentence =>
+  sentence.trim().replace(/^["'\[\]]+|["'\[\]]+$/g, '')
+);
+
+    for(const sentence of cleanSentences){
+      const li = document.createElement("li");
+      li.textContent = sentence;
+      wrapper2.appendChild(li);
+    }
+  }
+  
   nextButtonClick();
+  selectButtonClick();
+
 
 </script>
 </body>
