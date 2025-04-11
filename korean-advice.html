@@ -3,35 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh; /*뷰포트의 높이를 100%를 최소높이로 지정 */
+    }
+    h2{
+      display: block;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #nextButton, #selectButton{
+      display: inline;
+      color: white;
+      background-color: darkcyan;
+      border-radius: 10%;
+      padding: 5px 15px;
+      border: none;
+    }
+    h3{
+      text-align: center;
+    }
+
+  
+
+
+
+  </style>
   <title>한국어 명언집</title>
-  <script>
-    fetch("https://korean-advice-open-api.vercel.app/api/advice", {
-      method: "GET",
-    }).then(response => {
-      if(!response.ok){
-        throw new Error("명언을 찾을수 없습니다!");
-      }
-      return response.json();
-    }).then(data => {
-      let element = document.getElementById("korean-advice");
-
-      let data1 = data.author;
-      let data2 = data.authorProfile;
-      let data3 = data.message;
-
-      element.innerHTML += `<div>${data1}</div>
-                            <div>${data2}</div>
-                            <div>${data3}</div>`;
-
-
-    }).catch(error => {
-      alert("명언을 찾을수 없습니다!");
-    })
-
-
-  </script>
+  
 </head>
 <body>
-  <div id="korean-advice"></div>
+  <div id="container">
+  <h2>한국어 명언</h2>
+  <div id="wrapper">
+  </div>
+  <span id="spanButton">
+  <button id="nextButton">다음</button>
+  <button id="selectButton">선택</button>
+  </span>
+
+  <div id="wrapper2">
+    <h3>즐겨찾기 명언</h3>
+  </div>
+</div>
+
+
+<script>
+  fetch("https://korean-advice-open-api.vercel.app/api/advice", {
+    method: "GET",
+  }).then(response => {
+    if(!response.ok){
+      throw new Error("명언을 찾을수 없습니다!");
+    }
+    return response.json();
+  }).then(data => {
+    let element = document.getElementById("wrapper");
+
+    let data1 = data.author;
+    let data2 = data.authorProfile;
+    let data3 = data.message;
+
+    element.innerHTML += `<div id="content">${data3}</div>`;
+
+
+  }).catch(error => {
+    alert("명언을 찾을수 없습니다!");
+  })
+
+  const nextButton = document.getElementById("nextButton");
+  const selectButton = document.getElementById("selectButton");
+  const wrapper2 = document.getElementById("wrapper2");
+
+  function nextButtonAction(event){
+    event.preventDefault();
+    location.reload(true);
+  }
+
+  function selectButtonAction(event){
+    event.preventDefault();
+
+    
+  }
+
+  function nextButtonClick(){
+    nextButton.addEventListener("click", nextButtonAction);
+  }
+
+  function selectButtonClick(){
+    selectButton.addEventListener("click", selectButtonAction);
+  }
+
+  nextButtonClick();
+
+</script>
 </body>
 </html>
